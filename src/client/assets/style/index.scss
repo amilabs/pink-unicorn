@@ -1,0 +1,26 @@
+@import "config";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+@import "~bootstrap/scss/bootstrap";
+
+@import "main";
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
