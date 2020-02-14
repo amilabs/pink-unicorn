@@ -4,6 +4,7 @@ import { isEmpty } from 'lodash'
 
 SwaggerClient.http.withCredentials = true
 
+const apiSpecs = ONEAPI || {}
 const validator = new Validator()
 const execute = SwaggerClient.execute
 SwaggerClient.execute = (options) => {
@@ -35,14 +36,14 @@ SwaggerClient.execute = (options) => {
 
 const clients = {}
 
-export function client (name) {
-  if (!ONEAPI[ name ]) {
+export function client (name, spec) {
+  if (!apiSpecs[ name ] || !spec) {
     return Promise.reject(new Error(`Client "${name}" not found`))
   }
 
   if (!clients[ name ]) {
     clients[ name ] = new SwaggerClient({
-      spec: ONEAPI[ name ],
+      spec: apiSpecs[ name ] || spec,
       v2OperationIdCompatibilityMode: true,
     })
   }

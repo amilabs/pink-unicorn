@@ -1,0 +1,38 @@
+{
+  "name": "pink-unicorn-admin",
+  "version": "1.0.0",
+  "description": "React based framework for json-rpc based admin boxes",
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack-dev-server --devtool inline-source-map --hot",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amilabs/pink-unicorn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amilabs/pink-unicorn/issues"
+  },
+  "homepage": "https://github.com/amilabs/pink-unicorn#readme",
+  "dependencies": {
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "pink-unicorn": "1.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "8.2.0",
+    "webpack": "4.41.5",
+    "webpack-merge": "4.2.2",
+    "webpack-cli": "3.3.10",
+    "webpack-dev-server": "3.10.3"
+  },
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ]
+}

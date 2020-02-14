@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { NavLink as NavLinkRouter } from 'react-router-dom'
 import {
   Collapse,
-  Navbar,
+  Navbar as NavbarBootstrap,
   NavbarToggler,
   NavbarBrand,
   Nav,
@@ -10,14 +10,15 @@ import {
   NavLink,
   NavbarText
 } from 'reactstrap'
-import { collections } from '@/routes'
 
-const Example = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+export default function Navbar ({
+  collections = []
+} = {}) {
+  const [ isOpen, setIsOpen ] = useState(false)
+  const toggle = () => setIsOpen(!isOpen)
 
   return (
-    <Navbar color="light" light expand="md">
+    <NavbarBootstrap color="light" light expand="md">
       <NavbarBrand to="/" tag={NavLinkRouter}>{document.title || 'pink-unicorn'}</NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
@@ -36,8 +37,6 @@ const Example = (props) => {
         </Nav>
         <NavbarText>Version: {VERSION}</NavbarText>
       </Collapse>
-    </Navbar>
-  );
+    </NavbarBootstrap>
+  )
 }
-
-export default Example;

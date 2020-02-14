@@ -3,7 +3,7 @@ import { Component, createRef } from 'react'
 import { Input } from 'reactstrap'
 import DateRangePicker from 'daterangepicker'
 import moment from 'moment'
-import { parseDateInterval } from '@/utils'
+import { parseDateInterval } from '../../utils'
 
 export default class DateRange extends Component {
   control = createRef()

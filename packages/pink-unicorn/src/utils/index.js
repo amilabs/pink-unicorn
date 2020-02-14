@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { padEnd, round, trim } from 'lodash'
 import moment from 'moment'
 
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
@@ -33,8 +33,8 @@ export function parseDate (value) {
 
 export function parseDateInterval (value) {
   value = String(value || '').split(' - ', 2);
-  let start = _.trim(value[0], ' -:/');
-  let end = _.trim(value[1], ' -:/');
+  let start = trim(value[0], ' -:/');
+  let end = trim(value[1], ' -:/');
 
   if (start && end) {
     start = parseDate(start)[0];
@@ -69,7 +69,7 @@ export function formatNum(
   num = parseFloat(num);
 
   if (withDecimals) {
-    num = _.round(num, decimals);
+    num = round(num, decimals);
   }
 
   if (isNaN(num)) {
@@ -85,11 +85,11 @@ export function formatNum(
       res += '.';
       let tail = parts[1].substring(0, decimals);
       if (tail.length < zeroCount) {
-        tail = _.padEnd(tail, zeroCount, '0');
+        tail = padEnd(tail, zeroCount, '0');
       }
       res += tail;
     } else {
-      res += _.padEnd('.', parseInt(zeroCount, 10) + 1, '0');
+      res += padEnd('.', parseInt(zeroCount, 10) + 1, '0');
     }
   }
 

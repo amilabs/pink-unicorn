@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
-import DateRange from '@/components/DateRange'
-import { parseDateInterval, formatDateInterval } from '@/utils'
+import DateRange from '../DateRange'
+import { parseDateInterval, formatDateInterval } from '../../utils'
 
 export default function GlobalFilter ({ data, disabled, onChange }) {
   const [ filterData, setFilterData ] = useState(data)
