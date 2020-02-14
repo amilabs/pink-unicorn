@@ -17,6 +17,7 @@ const gitRevisionPlugin = new GitRevisionPlugin({
   versionCommand: 'describe --tags --long --always'
 })
 
+console.log('ROOT_PATH', process.cwd())
 console.log('GIT version:', gitRevisionPlugin.version())
 console.log('GIT hash:', gitRevisionPlugin.commithash())
 
@@ -57,7 +58,11 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: /node_modules/,
+        include: [
+          srcPath,
+          /node_modules\/@rikishi\/pink-unicorn/,
+          /node_modules\/pink-unicorn/,
+        ],
         use: {
           loader: 'babel-loader',
           options: {

@@ -37,13 +37,13 @@ SwaggerClient.execute = (options) => {
 const clients = {}
 
 export function client (name, spec) {
-  if (!apiSpecs[ name ] || !spec) {
+  if (!(spec || apiSpecs[ name ])) {
     return Promise.reject(new Error(`Client "${name}" not found`))
   }
 
   if (!clients[ name ]) {
     clients[ name ] = new SwaggerClient({
-      spec: apiSpecs[ name ] || spec,
+      spec: spec || apiSpecs[ name ],
       v2OperationIdCompatibilityMode: true,
     })
   }
