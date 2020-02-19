@@ -13,13 +13,24 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const SriPlugin = require('webpack-subresource-integrity')
 
-const gitRevisionPlugin = new GitRevisionPlugin({
-  versionCommand: 'describe --tags --long --always'
-})
+const REVISION = process.env.VERSION ? {
+  VERSION: process.env.VERSION,
+  COMMITHASH: process.env.COMMITHASH || process.env.VERSION,
+  BRANCH: process.env.BRANCH || process.env.VERSION,
+} : (function () {
+  const gitRevisionPlugin = new GitRevisionPlugin({
+    versionCommand: 'describe --tags --long --always'
+  })
+  return {
+    VERSION: gitRevisionPlugin.version(),
+    COMMITHASH: gitRevisionPlugin.commithash(),
+    BRANCH: gitRevisionPlugin.branch(),
+  }
+})()
 
 console.log('ROOT_PATH', process.cwd())
-console.log('GIT version:', gitRevisionPlugin.version())
-console.log('GIT hash:', gitRevisionPlugin.commithash())
+console.log('GIT version:', REVISION.VERSION)
+console.log('GIT hash:', REVISION.COMMITHASH)
 
 const isPropuction = process.env.NODE_ENV === 'production'
 const rootPath = process.cwd()
@@ -62,6 +73,7 @@ module.exports = {
           srcPath,
           /node_modules\/@rikishi\/pink-unicorn/,
           /node_modules\/pink-unicorn/,
+          /packages\/pink-unicorn/,
         ],
         use: {
           loader: 'babel-loader',
@@ -210,7 +222,7 @@ module.exports = {
   },
   devServer: {
     host: process.env.REACT_DEV_HOST || 'localhost',
-    port: process.env.REACT_DEV_PORT || 3000,
+    port: process.env.REACT_DEV_PORT || 3002,
     noInfo: true,
     hot: false,
     compress: false,
@@ -247,11 +259,11 @@ module.exports = {
   plugins: [
     new ProgressPlugin(),
     new CleanWebpackPlugin(),
-    gitRevisionPlugin,
+    // gitRevisionPlugin,
     new DefinePlugin({
-      'VERSION': JSON.stringify(gitRevisionPlugin.version()),
-      'COMMITHASH': JSON.stringify(gitRevisionPlugin.commithash()),
-      'BRANCH': JSON.stringify(gitRevisionPlugin.branch()),
+      'VERSION': JSON.stringify(REVISION.VERSION),
+      'COMMITHASH': JSON.stringify(REVISION.COMMITHASH),
+      'BRANCH': JSON.stringify(REVISION.BRANCH),
       'ONEAPI': JSON.stringify(api),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
