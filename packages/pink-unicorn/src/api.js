@@ -2,7 +2,7 @@ import SwaggerClient from 'swagger-client'
 import Validator from 'swagger-model-validator'
 import { isEmpty } from 'lodash'
 
-SwaggerClient.http.withCredentials = true
+// SwaggerClient.http.withCredentials = true
 
 const apiSpecs = ONEAPI || {}
 const validator = new Validator()
