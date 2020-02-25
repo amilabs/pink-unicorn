@@ -31,14 +31,14 @@ export function parseDate (value) {
   return start && end ? [start, end] : [];
 }
 
-export function parseDateInterval (value) {
+export function parseDateInterval (value, strict = true) {
   value = String(value || '').split(' - ', 2);
   let start = trim(value[0], ' -:/');
   let end = trim(value[1], ' -:/');
 
   if (start && end) {
     start = parseDate(start)[0];
-    end = parseDate(end)[1];
+    end = parseDate(end)[strict ? 0 : 1];
   } else if (start) {
     const interval = parseDate(start);
     start = interval[0]
