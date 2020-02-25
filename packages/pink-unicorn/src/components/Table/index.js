@@ -24,7 +24,17 @@ export function TableCellInt ({ cell }) {
   )
 }
 
-export default function Table ({ columns, data, onFetchData, globalFilter, loading }) {
+const defaultPropGetter = () => ({})
+
+export default function Table ({
+  columns,
+  data,
+  onFetchData,
+  globalFilter,
+  getHeaderProps = defaultPropGetter,
+  getColumnProps = defaultPropGetter,
+  loading = false
+}) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -60,7 +70,18 @@ export default function Table ({ columns, data, onFetchData, globalFilter, loadi
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps(column.getSortByToggleProps())} width={column.width}>
+                <th
+                  {...column.getHeaderProps([
+                    {
+                      className: column.className,
+                      style: column.style,
+                      width: column.width,
+                    },
+                    getColumnProps(column),
+                    getHeaderProps(column),
+                    column.getSortByToggleProps()
+                  ])}
+                >
                   {column.render('Header')}
                   {column.isSorted ? column.isSortedDesc ?
                     <i className="fas fa-angle-down ml-2" /> :
