@@ -3,6 +3,7 @@ import { useTable, useAsyncDebounce, useSortBy } from 'react-table'
 import { Table as BootstrapTable, Spinner } from 'reactstrap'
 import { isNumber } from 'lodash'
 import classnames from 'classnames'
+import { formatNum } from '../../utils'
 import style from './index.module.scss'
 
 export function TableCellJson ({ cell }) {
@@ -19,7 +20,7 @@ export function TableCellBool ({ cell }) {
 
 export function TableCellInt ({ cell }) {
   return (
-    <div className="text-right">{isNumber(cell.value) ? cell.value : ''}</div>
+    <div className="text-right">{isNumber(cell.value) ? formatNum(cell.value) : ''}</div>
   )
 }
 

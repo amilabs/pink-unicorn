@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { NavLink as NavLinkRouter } from 'react-router-dom'
+import qs from 'query-string'
+import { fromPairs } from 'lodash'
 import {
   Collapse,
   Navbar as NavbarBootstrap,
@@ -12,10 +14,12 @@ import {
 } from 'reactstrap'
 
 export default function Navbar ({
-  collections = []
+  collections = [],
+  location,
 } = {}) {
   const [ isOpen, setIsOpen ] = useState(false)
   const toggle = () => setIsOpen(!isOpen)
+  const params = fromPairs(Array.from(new URLSearchParams(location?.search).entries()))
 
   return (
     <NavbarBootstrap color="light" light expand="md">
@@ -27,7 +31,10 @@ export default function Navbar ({
             <NavItem key={collection}>
               <NavLink
                 activeClassName="active"
-                to={`/${collection}/keys`}
+                to={{
+                  pathname: `/${collection}/keys`,
+                  search: `?${qs.stringify(params)}`,
+                }}
                 tag={NavLinkRouter}
               >
                 {collection}

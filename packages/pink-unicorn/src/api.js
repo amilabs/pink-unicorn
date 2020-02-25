@@ -1,6 +1,6 @@
 import SwaggerClient from 'swagger-client'
 import Validator from 'swagger-model-validator'
-import { isEmpty } from 'lodash'
+import { isEmpty, merge } from 'lodash'
 
 // SwaggerClient.http.withCredentials = true
 
@@ -43,7 +43,7 @@ export function client (name, spec) {
 
   if (!clients[ name ]) {
     clients[ name ] = new SwaggerClient({
-      spec: spec || apiSpecs[ name ],
+      spec: apiSpecs[ name ] ? merge({}, apiSpecs[ name ], spec) : spec,
       v2OperationIdCompatibilityMode: true,
     })
   }
