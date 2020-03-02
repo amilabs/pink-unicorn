@@ -17,7 +17,33 @@ SwaggerClient.execute = (options) => {
         pathParams[ parameter.name ] = value
         pathProperties[ parameter.name ] = parameter
         req.url = req.url.split(`{${parameter.name}}`).join(encodeURIComponent(value))
-      }
+      },
+
+      query: ({req, value, parameter}) => {
+        pathParams[ parameter.name ] = value
+        pathProperties[ parameter.name ] = parameter
+
+        req.query = req.query || {}
+
+        if (value === false && parameter.type === 'boolean') {
+          value = 'false'
+        }
+
+        if (value === 0 && ['number', 'integer'].indexOf(parameter.type) > -1) {
+          value = '0'
+        }
+
+        if (value) {
+          req.query[parameter.name] = {
+            collectionFormat: parameter.collectionFormat,
+            value
+          }
+        } else if (parameter.allowEmptyValue && value !== undefined) {
+          const paramName = parameter.name
+          req.query[paramName] = req.query[paramName] || {}
+          req.query[paramName].allowEmptyValue = true
+        }
+      },
     }
   })
 
