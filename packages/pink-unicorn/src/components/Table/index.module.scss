@@ -23,3 +23,39 @@
     }
   }
 }
+
+.fixed {
+  table-layout: fixed !important;
+}
+
+.table-cell-json {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  height: 1.5em;
+  padding-right: 50px;
+
+  &__collapsed {
+    line-height: 1.5;
+    position: relative;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  &-expand {
+    float: right;
+    margin-top: -1.5em;
+    margin-right: -50px;
+    position: relative;
+  }
+
+  &-expand,
+  &-collapse {
+    padding: 0;
+    border: 0;
+    display: block;
+  }
+}

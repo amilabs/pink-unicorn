@@ -1,14 +1,46 @@
-import { useEffect } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { useTable, useAsyncDebounce, useSortBy } from 'react-table'
-import { Table as BootstrapTable, Spinner } from 'reactstrap'
+import { Table as BootstrapTable, Spinner, Button, Collapse } from 'reactstrap'
 import { isNumber } from 'lodash'
 import classnames from 'classnames'
 import { formatNum } from '../../utils'
 import style from './index.module.scss'
 
 export function TableCellJson ({ cell }) {
+  const [ collapsed, setCollapsed ] = useState(false)
+
   return (
-    <code>{JSON.stringify(cell.value)}</code>
+    <Fragment>
+      <Collapse
+        isOpen={!collapsed}
+      >
+        <code className={style.tableCellJson}>
+          {JSON.stringify(cell.value)}
+          <Button
+            color="link"
+            size="sm"
+            className={style.tableCellJsonExpand}
+            onClick={() => setCollapsed(true)}
+          >
+            expand
+          </Button>
+        </code>
+      </Collapse>
+      <Collapse
+        isOpen={collapsed}
+        className={style.tableCellJsonCollapsed}
+      >
+        <code>{JSON.stringify(cell.value)}</code>
+        <Button
+          color="link"
+          size="sm"
+          className={style.tableCellJsonCollapse}
+          onClick={() => setCollapsed(false)}
+        >
+          collapse
+        </Button>
+      </Collapse>
+    </Fragment>
   )
 }
 
@@ -33,7 +65,8 @@ export default function Table ({
   globalFilter,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
-  loading = false
+  loading = false,
+  fixed = false,
 }) {
   const {
     getTableProps,
@@ -59,6 +92,7 @@ export default function Table ({
         className={classnames({
           'mb-0': true,
           [ style.loading ]: loading,
+          [ style.fixed ]: fixed,
         })}
         size="sm"
         hover
