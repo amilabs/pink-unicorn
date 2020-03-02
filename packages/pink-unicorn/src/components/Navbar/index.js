@@ -15,6 +15,7 @@ import {
 
 export default function Navbar ({
   collections = [],
+  menu = [],
   location,
 } = {}) {
   const [ isOpen, setIsOpen ] = useState(false)
@@ -27,15 +28,29 @@ export default function Navbar ({
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="mr-auto" navbar>
+          {menu.map((item, index) => (
+            <NavItem key={index}>
+              <NavLink
+                tag={NavLinkRouter}
+                activeClassName="active"
+                to={{
+                  ...item.to,
+                  search: `?${qs.stringify(params)}`,
+                }}
+              >
+                {item.name}
+              </NavLink>
+            </NavItem>
+          ))}
           {collections.map(collection => (
             <NavItem key={collection}>
               <NavLink
+                tag={NavLinkRouter}
                 activeClassName="active"
                 to={{
                   pathname: `/${collection}/keys`,
                   search: `?${qs.stringify(params)}`,
                 }}
-                tag={NavLinkRouter}
               >
                 {collection}
               </NavLink>

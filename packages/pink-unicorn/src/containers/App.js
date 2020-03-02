@@ -7,10 +7,11 @@ import ErrorBoundary from '../components/ErrorBoundary'
 const AppRouter = withRouter(({
   routes = [],
   collections = [],
+  menu = [],
   location,
 } = {}) => (
   <>
-    <Navbar collections={collections} location={location} />
+    <Navbar collections={collections} menu={menu} location={location} />
     <div className="container-fluid d-flex flex-fill flex-column my-4">
       <ErrorBoundary>
         <Switch>
