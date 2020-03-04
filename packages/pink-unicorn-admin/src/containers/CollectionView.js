@@ -1,12 +1,13 @@
 import { Component } from 'react'
 import { Alert, Spinner } from 'reactstrap'
 import { Link } from 'react-router-dom'
-import natsort from 'natsort'
+import isEqual from 'lodash/isEqual'
 import {
   Table,
   TableCellJson,
   TableCellBool,
   TableCellInt,
+  ColumnFilterText,
 } from 'pink-unicorn'
 
 class CollectionView extends Component {
@@ -16,6 +17,7 @@ class CollectionView extends Component {
       loading: false,
       error: null,
       data: [],
+      globalFilter: {},
     }
   }
 
@@ -31,6 +33,14 @@ class CollectionView extends Component {
       width: null,
       Cell: TableCellJson,
       disableSortBy: true,
+      Filter: ColumnFilterText(value => {
+        this.setState({
+          globalFilter: {
+            ...this.state.globalFilter,
+            json: value,
+          }
+        })
+      }),
     },
   ]
 
@@ -44,12 +54,15 @@ class CollectionView extends Component {
     return (
       nextProps.location.search !== this.props.location.search ||
       nextState.loading !== this.state.loading ||
-      nextState.error !== this.state.error
+      nextState.error !== this.state.error ||
+      !isEqual(nextState.globalFilter, this.state.globalFilter)
     )
   }
 
-  handleFetchData = () => {
+  handleFetchData = (data) => {
     this.setState({ loading: true })
+
+    console.log(data)
 
     setTimeout(() => {
       if (!this.isUnmounted) {
@@ -72,6 +85,7 @@ class CollectionView extends Component {
         {this.state.loading}
 
         <Table
+          globalFilter={this.state.globalFilter}
           loading={this.state.loading}
           columns={this.columns}
           data={this.state.data}

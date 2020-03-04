@@ -1,7 +1,7 @@
-import { useEffect, useState, Fragment } from 'react'
-import { useTable, useAsyncDebounce, useSortBy } from 'react-table'
-import { Table as BootstrapTable, Spinner, Button, Collapse } from 'reactstrap'
-import { isNumber } from 'lodash'
+import { useEffect, useState, useMemo, Fragment } from 'react'
+import { useTable, useAsyncDebounce, useSortBy, useFilters } from 'react-table'
+import { Table as BootstrapTable, Spinner, Button, Collapse, Input } from 'reactstrap'
+import { isNumber, debounce } from 'lodash'
 import classnames from 'classnames'
 import { formatNum } from '../../utils'
 import style from './index.module.scss'
@@ -56,6 +56,28 @@ export function TableCellInt ({ cell }) {
   )
 }
 
+export function ColumnFilterText (callback) {
+  callback = debounce(callback, 400)
+  return ({
+    column: { filterValue, preFilteredRows, setFilter },
+  }) => {
+    return (
+      <Input
+        type="text"
+        bsSize="sm"
+        value={filterValue || ''}
+        onChange={event => {
+          const value = event.target.value || undefined
+          setFilter(value)
+          callback?.(value)
+        }}
+        placeholder={`Search records...`}
+        clearable="true"
+      />
+    )
+  }
+}
+
 const defaultPropGetter = () => ({})
 
 export default function Table ({
@@ -68,6 +90,13 @@ export default function Table ({
   loading = false,
   fixed = false,
 }) {
+  const defaultColumn = useMemo(
+    () => ({
+      Filter: () => (null),
+    }),
+    []
+  )
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -75,10 +104,16 @@ export default function Table ({
     prepareRow,
     rows,
     state,
-  } = useTable({
-    columns,
-    data,
-  }, useSortBy)
+  } = useTable(
+    {
+      columns,
+      data,
+      defaultColumn,
+      manualFilters: true,
+    },
+    useFilters,
+    useSortBy
+  )
 
   // const onFetchDataDebounced = useAsyncDebounce(onFetchData, 200)
 
@@ -120,6 +155,11 @@ export default function Table ({
                   {column.isSorted ? column.isSortedDesc ?
                     <i className="fas fa-angle-down ml-2" /> :
                     <i className="fas fa-angle-up ml-2" /> : null}
+                  {column.canFilter ? (
+                    <div>
+                      {column.render('Filter')}
+                    </div>
+                  ) : null}
                 </th>
               ))}
             </tr>

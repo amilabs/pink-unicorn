@@ -16,7 +16,7 @@ export default class ErrorBoundary extends Component {
         <Container className="themed-container">
           <Alert color="danger">
             <h4 className="alert-heading">Something went wrong.</h4>
-            <code style={{ 'white-space': 'pre-wrap' }}>
+            <code style={{ whiteSpace: 'pre-wrap' }}>
               {this.state.error.message}
             </code>
           </Alert>
