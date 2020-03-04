@@ -63,7 +63,7 @@ export function ColumnFilterText (callback) {
   }) => {
     return (
       <Input
-        type="text"
+        type="search"
         bsSize="sm"
         value={filterValue || ''}
         onChange={event => {
@@ -72,7 +72,6 @@ export function ColumnFilterText (callback) {
           callback?.(value)
         }}
         placeholder={`Search records...`}
-        clearable="true"
       />
     )
   }
@@ -156,7 +155,7 @@ export default function Table ({
                     <i className="fas fa-angle-down ml-2" /> :
                     <i className="fas fa-angle-up ml-2" /> : null}
                   {column.canFilter ? (
-                    <div>
+                    <div className="mt-1" onClick={event => event.stopPropagation()}>
                       {column.render('Filter')}
                     </div>
                   ) : null}

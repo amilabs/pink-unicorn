@@ -25,7 +25,15 @@ class CollectionView extends Component {
     {
       Header: 'Key',
       accessor: 'id',
-      width: 200,
+      width: 400,
+      Filter: ColumnFilterText(value => {
+        this.setState({
+          globalFilter: {
+            ...this.state.globalFilter,
+            id: value,
+          }
+        })
+      }),
     },
     {
       Header: 'JSON',
