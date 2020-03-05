@@ -109,6 +109,9 @@ export default function Table ({
       data,
       defaultColumn,
       manualFilters: true,
+      initialState: {
+        filters: Object.entries(globalFilter || {}).map(item => ({ id: item[0], value: item[1] })),
+      },
     },
     useFilters,
     useSortBy
