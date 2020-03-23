@@ -88,13 +88,11 @@ export default function Table ({
   getColumnProps = defaultPropGetter,
   loading = false,
   fixed = false,
+  manualSortBy = false,
 }) {
-  const defaultColumn = useMemo(
-    () => ({
-      Filter: () => (null),
-    }),
-    []
-  )
+  const defaultColumn = useMemo(() => ({
+    Filter: () => (null),
+  }), [])
 
   const {
     getTableProps,
@@ -102,12 +100,13 @@ export default function Table ({
     headerGroups,
     prepareRow,
     rows,
-    state,
+    state: { sortBy },
   } = useTable(
     {
       columns,
       data,
       defaultColumn,
+      manualSortBy,
       manualFilters: true,
       initialState: {
         filters: Object.entries(globalFilter || {}).map(item => ({ id: item[0], value: item[1] })),
@@ -117,11 +116,11 @@ export default function Table ({
     useSortBy
   )
 
-  // const onFetchDataDebounced = useAsyncDebounce(onFetchData, 200)
+  const onFetchDataDebounced = useAsyncDebounce(onFetchData, 200)
 
   useEffect(() => {
-    onFetchData({ globalFilter })
-  }, [ globalFilter ])
+    onFetchDataDebounced({ globalFilter, sortBy })
+  }, [ globalFilter, manualSortBy ? sortBy : null ])
 
   return (
     <div className={style.root}>

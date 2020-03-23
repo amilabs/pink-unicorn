@@ -1,6 +1,6 @@
 {
   "name": "pink-unicorn",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
   "module": "index.js",
@@ -35,7 +35,7 @@
     "query-string": "6.10.1",
     "react-router": "5.1.2",
     "react-router-dom": "5.1.2",
-    "react-table": "7.0.0-rc.15",
+    "react-table": "7.0.0",
     "reactstrap": "8.4.1",
     "swagger-client": "3.10.0",
     "swagger-model-validator": "3.0.18",

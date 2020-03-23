@@ -98,6 +98,7 @@ class CollectionView extends Component {
           columns={this.columns}
           data={this.state.data}
           fixed={true}
+          manualSortBy={true}
           onFetchData={this.handleFetchData}
         />
       </>
