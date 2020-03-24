@@ -93,12 +93,14 @@ class CollectionView extends Component {
         {this.state.loading}
 
         <Table
+          defaultSortBy="id"
+          defaultSortAsc={1}
           globalFilter={this.state.globalFilter}
           loading={this.state.loading}
           columns={this.columns}
           data={this.state.data}
           fixed={true}
-          manualSortBy={true}
+          manualSortBy={false}
           onFetchData={this.handleFetchData}
         />
       </>

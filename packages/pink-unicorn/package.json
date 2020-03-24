@@ -1,6 +1,6 @@
 {
   "name": "pink-unicorn",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
   "module": "index.js",

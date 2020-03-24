@@ -84,6 +84,8 @@ export default function Table ({
   data,
   onFetchData,
   globalFilter,
+  defaultSortBy,
+  defaultSortAsc,
   getHeaderProps = defaultPropGetter,
   getColumnProps = defaultPropGetter,
   loading = false,
@@ -110,6 +112,10 @@ export default function Table ({
       manualFilters: true,
       initialState: {
         filters: Object.entries(globalFilter || {}).map(item => ({ id: item[0], value: item[1] })),
+        sortBy: defaultSortBy ? [{
+          id: defaultSortBy,
+          desc: !defaultSortAsc,
+        }] : [],
       },
     },
     useFilters,
