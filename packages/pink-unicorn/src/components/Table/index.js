@@ -78,11 +78,13 @@ export function ColumnFilterText (callback) {
 }
 
 const defaultPropGetter = () => ({})
+const noop = () => {}
 
 export default function Table ({
   columns,
   data,
-  onFetchData,
+  onSortBy = noop,
+  onFetchData = noop,
   globalFilter,
   defaultSortBy,
   defaultSortAsc,
@@ -122,7 +124,12 @@ export default function Table ({
     useSortBy
   )
 
+  const onSortByDebounced = useAsyncDebounce(onSortBy, 200)
   const onFetchDataDebounced = useAsyncDebounce(onFetchData, 200)
+
+  useEffect(() => {
+    onSortByDebounced(sortBy)
+  }, [ sortBy ])
 
   useEffect(() => {
     onFetchDataDebounced({ globalFilter, sortBy })

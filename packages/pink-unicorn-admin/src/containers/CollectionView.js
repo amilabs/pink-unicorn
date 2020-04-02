@@ -86,6 +86,10 @@ class CollectionView extends Component {
     }, 1000)
   }
 
+  handleSortBy = (data) => {
+    console.log(data)
+  }
+
   render () {
     return (
       <>
@@ -102,6 +106,7 @@ class CollectionView extends Component {
           fixed={true}
           manualSortBy={false}
           onFetchData={this.handleFetchData}
+          onSortBy={this.handleSortBy}
         />
       </>
     )
