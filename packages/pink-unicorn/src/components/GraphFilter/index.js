@@ -5,7 +5,8 @@ import { parseDateInterval, formatDateInterval } from '../../utils'
 
 export default function GlobalFilter ({ data, disabled, onChange }) {
   const [ filterData, setFilterData ] = useState(data)
-  const dataRange = formatDateInterval(filterData.from * 1000, filterData.to * 1000)
+  const dataRange = (filterData.from && filterData.to) ?
+    formatDateInterval(filterData.from * 1000, filterData.to * 1000) : undefined
 
   return (
     <Form
