@@ -8,6 +8,7 @@ import {
   TableCellBool,
   TableCellInt,
   ColumnFilterText,
+  GraphFilter,
 } from 'pink-unicorn'
 
 class CollectionView extends Component {
@@ -86,6 +87,15 @@ class CollectionView extends Component {
     }, 1000)
   }
 
+  handleChangeFilter = (data) => {
+    this.setState({
+      globalFilter: {
+        ...this.state.globalFilter,
+        ...data,
+      }
+    })
+  }
+
   handleSortBy = (data) => {
     console.log(data)
   }
@@ -95,6 +105,12 @@ class CollectionView extends Component {
       <>
         <h1 className="mb-4">List</h1>
         {this.state.loading}
+
+        <GraphFilter
+          disabled={this.state.loading}
+          data={this.state.globalFilter}
+          onChange={this.handleChangeFilter}
+        />
 
         <Table
           defaultSortBy="id"

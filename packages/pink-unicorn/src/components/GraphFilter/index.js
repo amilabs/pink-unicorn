@@ -32,6 +32,12 @@ export default function GlobalFilter ({ data, disabled, onChange }) {
                 from: Math.floor(value[0].getTime() / 1000),
                 to: Math.floor(value[1].getTime() / 1000),
               })
+            } else {
+              setFilterData({
+                ...filterData,
+                from: undefined,
+                to: undefined,
+              })
             }
           }}
         />
