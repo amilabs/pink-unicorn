@@ -1,6 +1,6 @@
 {
   "name": "pink-unicorn",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
   "module": "index.js",
@@ -39,6 +39,10 @@
     "reactstrap": "8.4.1",
     "swagger-client": "3.10.0",
     "swagger-model-validator": "3.0.18",
+    "svg-sprite-loader": "4.1.6",
+    "svg-url-loader": "3.0.0",
+    "svgo": "1.2.2",
+    "svgo-loader": "2.2.1",
     "@babel/core": "7.8.4",
     "@babel/plugin-proposal-class-properties": "7.8.3",
     "@babel/plugin-proposal-decorators": "7.8.3",

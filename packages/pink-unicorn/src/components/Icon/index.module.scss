@@ -1,0 +1,39 @@
+@keyframes icon_spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.root {
+  display: inline-block;
+  flex-shrink: 0;
+
+  &.sizexs {
+    width: 0.715rem;
+    height: 0.715rem;
+  }
+
+  &.sizesm {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  &.sizemd {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &.sizelg {
+    width: 1.33rem;
+    height: 1.33rem;
+  }
+
+  &.size2x {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.spin {
+  animation: icon_spin 2s linear infinite;
+}

@@ -132,7 +132,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         use: [
           {
             loader: 'url-loader',
@@ -146,6 +146,13 @@ module.exports = {
             loader: 'img-loader'
           }
         ]
+      },
+      {
+        test: /\.svg/,
+        use: [
+          'svg-sprite-loader',
+          'svgo-loader',
+        ],
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/,

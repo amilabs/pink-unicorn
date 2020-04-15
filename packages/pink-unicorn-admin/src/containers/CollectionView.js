@@ -71,8 +71,6 @@ class CollectionView extends Component {
   handleFetchData = (data) => {
     this.setState({ loading: true })
 
-    console.log(data)
-
     setTimeout(() => {
       if (!this.isUnmounted) {
         this.setState({

@@ -1,3 +1,5 @@
+import './src/sprite'
+export { default as Icon } from './src/components/Icon'
 export { default as DateRange } from './src/components/DateRange'
 export { default as ErrorBoundary } from './src/components/ErrorBoundary'
 export { default as GlobalFilter } from './src/components/GlobalFilter'
