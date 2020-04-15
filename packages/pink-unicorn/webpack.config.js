@@ -148,10 +148,30 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg/,
-        use: [
-          'svg-sprite-loader',
-          'svgo-loader',
+        test: /\.svg(\?.*)?$/,
+        oneOf: [
+          {
+            resourceQuery: /sprite/,
+            use: [
+              'svg-sprite-loader',
+              'svgo-loader',
+            ],
+          },
+          {
+            use: [
+              {
+                loader: 'url-loader',
+                options: {
+                  limit: 1,
+                  name: isPropuction ? '[hash].[ext]' : '[name].[ext]',
+                  outputPath: 'images/'
+                }
+              },
+              {
+                loader: 'img-loader'
+              }
+            ],
+          },
         ],
       },
       {

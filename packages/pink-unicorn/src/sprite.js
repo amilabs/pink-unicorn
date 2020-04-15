@@ -1,1 +1,1 @@
-import './style/img/info.svg'
+import './style/img/info.svg?sprite'
