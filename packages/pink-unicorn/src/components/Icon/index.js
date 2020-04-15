@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import style from './index.module.scss'
 
 export default function Icon (props) {
