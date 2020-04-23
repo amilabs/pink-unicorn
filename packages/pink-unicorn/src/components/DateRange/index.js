@@ -84,6 +84,7 @@ export default class DateRange extends Component {
         innerRef={this.control}
         bsSize={this.props.bsSize}
         type="search"
+        autocomplete="off"
         value={String(this.props.value || '')}
         onChange={this.handleChange}
       />
