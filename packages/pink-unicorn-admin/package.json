@@ -20,7 +20,7 @@
   "dependencies": {
     "react": "16.12.0",
     "react-dom": "16.12.0",
-    "pink-unicorn": "1.0.27"
+    "pink-unicorn": "1.0.28"
   },
   "devDependencies": {
     "dotenv": "8.2.0",
