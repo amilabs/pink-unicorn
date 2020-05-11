@@ -46,6 +46,8 @@ export default class DateRange extends Component {
       'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().endOf('days')],
       'This Month': [moment().startOf('month'), moment().endOf('month')],
       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      'Last 3 Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(3, 'month').endOf('month')],
+      'Last 6 Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(6, 'month').endOf('month')],
     }
   }
 
@@ -84,7 +86,7 @@ export default class DateRange extends Component {
         innerRef={this.control}
         bsSize={this.props.bsSize}
         type="search"
-        autocomplete="off"
+        autoComplete="off"
         value={String(this.props.value || '')}
         onChange={this.handleChange}
       />
