@@ -1,6 +1,6 @@
 {
   "name": "pink-unicorn",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
   "module": "index.js",
@@ -26,7 +26,7 @@
     "@sentry/browser": "5.12.1",
     "bootstrap": "4.4.1",
     "daterangepicker": "3.0.5",
-    "echarts": "4.6.0",
+    "@rikishi/echarts": "4.8.0-rc.9",
     "file-loader": "5.0.2",
     "js-yaml": "3.13.1",
     "lodash": "4.17.15",
