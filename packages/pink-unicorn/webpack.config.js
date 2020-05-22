@@ -225,7 +225,7 @@ module.exports = {
         },
         echarts: {
           name: 'echarts',
-          test: /[\\/]node_modules[\\/](@rikishi\\/echarts|zrender)[\\/]/,
+          test: /[\\/]node_modules[\\/](@rikishi[\\/]echarts|zrender)[\\/]/,
           priority: 50,
           enforce: true,
           chunks: 'all',
