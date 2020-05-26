@@ -9,8 +9,8 @@ export default function GlobalFilter ({
   sortOptions = [
     { label: 'count', value: 'count' },
     { label: 'skip', value: 'skip' },
-  ]
-  onChange
+  ],
+  onChange,
 } = {}) {
   const [ filterData, setFilterData ] = useState(data)
 
