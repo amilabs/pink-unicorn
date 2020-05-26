@@ -3,7 +3,15 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import DateRange from '../DateRange'
 import { parseDateInterval, formatDateInterval } from '../../utils'
 
-export default function GlobalFilter ({ data, disabled, onChange }) {
+export default function GlobalFilter ({
+  data,
+  disabled,
+  sortOptions = [
+    { label: 'count', value: 'count' },
+    { label: 'skip', value: 'skip' },
+  ]
+  onChange
+} = {}) {
   const [ filterData, setFilterData ] = useState(data)
 
   useEffect(() => {
@@ -21,25 +29,28 @@ export default function GlobalFilter ({ data, disabled, onChange }) {
         onChange(filterData)
       }}
     >
-      <FormGroup className="mb-2 mr-2 mb-sm-0">
-        <Label for="sort" className="mr-2">Order</Label>
-        <Input
-          value={filterData.sort}
-          type="select"
-          name="sort"
-          id="sort"
-          disabled={disabled}
-          onChange={event => {
-            setFilterData({
-              ...filterData,
-              sort: event.target.value,
-            })
-          }}
-        >
-          <option value="count">count</option>
-          <option value="skip">skip</option>
-        </Input>
-      </FormGroup>
+      {sortOptions.length ? (
+        <FormGroup className="mb-2 mr-2 mb-sm-0">
+          <Label for="sort" className="mr-2">Order</Label>
+          <Input
+            value={filterData.sort}
+            type="select"
+            name="sort"
+            id="sort"
+            disabled={disabled}
+            onChange={event => {
+              setFilterData({
+                ...filterData,
+                sort: event.target.value,
+              })
+            }}
+          >
+            {sortOptions.map(item => (
+              <option key={item.value} value={item.value}>{item.label}</option>
+            ))}
+          </Input>
+        </FormGroup>
+      ) : null}
 
       <FormGroup className="mb-2 mr-2 mb-sm-0">
         <Label for="dataRange" className="mr-2">From</Label>
