@@ -3,7 +3,13 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import DateRange from '../DateRange'
 import { parseDateInterval, formatDateInterval } from '../../utils'
 
-export default function GlobalFilter ({ data, disabled, onChange }) {
+export default function GraphFilter ({
+  data,
+  disabled,
+  showCancel,
+  onChange = () => {},
+  onCancel = () => {},
+} = {}) {
   const [ filterData, setFilterData ] = useState(data)
   const dataRange = (filterData.from && filterData.to) ?
     formatDateInterval(filterData.from * 1000, filterData.to * 1000) : undefined
@@ -47,6 +53,13 @@ export default function GlobalFilter ({ data, disabled, onChange }) {
         <Label>&nbsp;</Label>
         <Button disabled={disabled} className="form-control">Submit</Button>
       </FormGroup>
+
+      {showCancel ? (
+        <FormGroup className="mb-2 mr-2 mb-sm-0">
+          <Label>&nbsp;</Label>
+          <Button className="form-control" color="warning" onClick={() => onCancel()}>Cancel Request</Button>
+        </FormGroup>
+      ) : null}
     </Form>
   )
 }
