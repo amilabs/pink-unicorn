@@ -10,7 +10,9 @@ export default function GlobalFilter ({
     { label: 'count', value: 'count' },
     { label: 'skip', value: 'skip' },
   ],
-  onChange,
+  showCancel,
+  onChange = () => {},
+  onCancel = () => {},
 } = {}) {
   const [ filterData, setFilterData ] = useState(data)
 
@@ -95,6 +97,13 @@ export default function GlobalFilter ({
         <Label>&nbsp;</Label>
         <Button disabled={disabled} className="form-control">Submit</Button>
       </FormGroup>
+
+      {showCancel ? (
+        <FormGroup className="mb-2 mr-2 mb-sm-0">
+          <Label>&nbsp;</Label>
+          <Button className="form-control" color="warning" onClick={() => onCancel()}>Cancel Request</Button>
+        </FormGroup>
+      ) : null}
     </Form>
   )
 }
