@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import DateRange from '../DateRange'
 import { parseDateInterval, formatDateInterval } from '../../utils'
@@ -7,17 +7,23 @@ export default function GraphFilter ({
   data,
   disabled,
   showCancel,
+  className = 'mb-4',
   onChange = () => {},
   onCancel = () => {},
 } = {}) {
   const [ filterData, setFilterData ] = useState(data)
+
+  useEffect(() => {
+    setFilterData(data)
+  }, [data])
+
   const dataRange = (filterData.from && filterData.to) ?
     formatDateInterval(filterData.from * 1000, filterData.to * 1000) : undefined
 
   return (
     <Form
       inline
-      className="mb-4"
+      className={className}
       onSubmit={event => {
         event.preventDefault()
         onChange(filterData)
