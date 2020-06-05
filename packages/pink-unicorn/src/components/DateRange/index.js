@@ -37,17 +37,29 @@ export default class DateRange extends Component {
 
   customRanges() {
     return {
-      'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').endOf('hour')],
-      'This hour': [moment().startOf('hour'), moment().endOf('hour')],
-      'Today': [moment().startOf('days'), moment().endOf('days')],
+      'This hour': [moment().startOf('hour'), moment().startOf('hour').add(1, 'hour')],
+      'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').startOf('hour').add(1, 'hour')],
+      'Today': [moment().startOf('days'), moment().startOf('days').add(1, 'day')],
       'Last 24 Hours': [moment().subtract(24, 'hours'), moment()],
-      'Yesterday': [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').endOf('days')],
-      'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().endOf('days')],
-      'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().endOf('days')],
-      'This Month': [moment().startOf('month'), moment().endOf('month')],
-      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-      'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-      'Last 6 Month': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      'Yesterday': [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').startOf('days').add(1, 'day')],
+      'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
+      'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
+      'This Month': [moment().startOf('month'), moment().startOf('month').add(1, 'month')],
+      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
+      'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
+      'Last 6 Month': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
+
+      // 'This hour': [moment().startOf('hour'), moment().endOf('hour')],
+      // 'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').endOf('hour')],
+      // 'Today': [moment().startOf('days'), moment().endOf('days')],
+      // 'Last 24 Hours': [moment().subtract(24, 'hours'), moment()],
+      // 'Yesterday': [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').endOf('days')],
+      // 'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().endOf('days')],
+      // 'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().endOf('days')],
+      // 'This Month': [moment().startOf('month'), moment().endOf('month')],
+      // 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      // 'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      // 'Last 6 Month': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
     }
   }
 
