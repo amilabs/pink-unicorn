@@ -8,6 +8,7 @@ export default function GraphFilter ({
   disabled,
   showCancel,
   className = 'mb-4',
+  utc = false,
   onChange = () => {},
   onCancel = () => {},
 } = {}) {
@@ -18,7 +19,7 @@ export default function GraphFilter ({
   }, [data])
 
   const dataRange = (filterData.from && filterData.to) ?
-    formatDateInterval(filterData.from * 1000, filterData.to * 1000) : undefined
+    formatDateInterval(filterData.from * 1000, filterData.to * 1000, utc) : undefined
 
   return (
     <Form
@@ -36,8 +37,9 @@ export default function GraphFilter ({
           style={{ width: 360 }}
           value={dataRange}
           disabled={disabled}
+          utc={utc}
           onChange={value => {
-            value = parseDateInterval(value)
+            value = parseDateInterval(value, true, utc)
             if (value.length === 2) {
               setFilterData({
                 ...filterData,

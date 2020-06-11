@@ -9,7 +9,7 @@ export default class DateRange extends Component {
   control = createRef()
 
   componentDidMount() {
-    const interval = parseDateInterval(this.props.value)
+    const interval = parseDateInterval(this.props.value, true, this.props.utc)
 
     this.$picker = new DateRangePicker(this.control.current, {
       startDate: interval[0],
@@ -39,15 +39,15 @@ export default class DateRange extends Component {
     return {
       'This hour': [moment().startOf('hour'), moment().startOf('hour').add(1, 'hour')],
       'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').startOf('hour').add(1, 'hour')],
-      'Today': [moment().startOf('days'), moment().startOf('days').add(1, 'day')],
+      Today: [moment().startOf('days'), moment().startOf('days').add(1, 'day')],
       'Last 24 Hours': [moment().subtract(24, 'hours'), moment()],
-      'Yesterday': [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').startOf('days').add(1, 'day')],
+      Yesterday: [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').startOf('days').add(1, 'day')],
       'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
       'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
       'This Month': [moment().startOf('month'), moment().startOf('month').add(1, 'month')],
-      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
-      'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
-      'Last 6 Month': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').startOf('month').add(1, 'month')],
+      'Last Month': [moment().subtract(1, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
+      'Last 3 Month': [moment().subtract(3, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
+      'Last 6 Month': [moment().subtract(6, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
 
       // 'This hour': [moment().startOf('hour'), moment().endOf('hour')],
       // 'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').endOf('hour')],
@@ -77,7 +77,7 @@ export default class DateRange extends Component {
   }
 
   handleChange = (event) => {
-    const interval = parseDateInterval(event.target.value)
+    const interval = parseDateInterval(event.target.value, true, this.props.utc)
     this.$picker.hide()
     this.$picker.setStartDate(interval[0])
     this.$picker.setEndDate(interval[1])

@@ -3,7 +3,7 @@ import moment from 'moment'
 
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
-export function parseDate (value) {
+export function parseDate (value, utc) {
   const formats = [
     [['DD-MM-YYYY HH:mm:ss', 'YYYY-MM-DD HH:mm:ss', 'DD/MM/YYYY HH:mm:ss'], 'seconds'],
     [['DD-MM-YYYY HH:mm', 'YYYY-MM-DD HH:mm', 'DD/MM/YYYY HH:mm'], 'minutes'],
@@ -19,7 +19,7 @@ export function parseDate (value) {
   let start;
   let end;
   for (let i = 0; i < formats.length; i++) {
-    const date = moment(value, formats[i][0], true);
+    const date = utc ? moment.utc(value, formats[i][0], true) : moment(value, formats[i][0], true);
     if (date.isValid()) {
       const round = formats[i][1];
       start = date.startOf(round).toDate();
@@ -31,16 +31,16 @@ export function parseDate (value) {
   return start && end ? [start, end] : [];
 }
 
-export function parseDateInterval (value, strict = true) {
+export function parseDateInterval (value, strict = true, utc = false) {
   value = String(value || '').split(' - ', 2);
   let start = trim(value[0], ' -:/');
   let end = trim(value[1], ' -:/');
 
   if (start && end) {
-    start = parseDate(start)[0];
-    end = parseDate(end)[strict ? 0 : 1];
+    start = parseDate(start, utc)[0];
+    end = parseDate(end, utc)[strict ? 0 : 1];
   } else if (start) {
-    const interval = parseDate(start);
+    const interval = parseDate(start, utc);
     start = interval[0]
     end = interval[1]
   }
@@ -48,7 +48,11 @@ export function parseDateInterval (value, strict = true) {
   return start && end ? [start, end] : [];
 }
 
-export function formatDateInterval (from, to) {
+export function formatDateInterval (from, to, utc = false) {
+  if (utc) {
+    return `${moment.utc(from).format(DATE_FORMAT)} - ${moment.utc(to).format(DATE_FORMAT)}`
+  }
+
   return `${moment(from).format(DATE_FORMAT)} - ${moment(to).format(DATE_FORMAT)}`
 }
 

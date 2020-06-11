@@ -108,6 +108,7 @@ class CollectionView extends Component {
           disabled={this.state.loading}
           data={this.state.globalFilter}
           onChange={this.handleChangeFilter}
+          utc
         />
 
         <Table
