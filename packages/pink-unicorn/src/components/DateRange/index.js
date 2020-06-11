@@ -36,30 +36,32 @@ export default class DateRange extends Component {
   }
 
   customRanges() {
+    const now = this.props.utc ? moment.utc() : moment()
+    const allNow = now.clone().startOf('days').add(1, 'day')
     return {
-      'This hour': [moment().startOf('hour'), moment().startOf('hour').add(1, 'hour')],
-      'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').startOf('hour').add(1, 'hour')],
-      Today: [moment().startOf('days'), moment().startOf('days').add(1, 'day')],
-      'Last 24 Hours': [moment().subtract(24, 'hours'), moment()],
-      Yesterday: [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').startOf('days').add(1, 'day')],
-      'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
-      'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().startOf('days').add(1, 'day')],
-      'This Month': [moment().startOf('month'), moment().startOf('month').add(1, 'month')],
-      'Last Month': [moment().subtract(1, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
-      'Last 3 Month': [moment().subtract(3, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
-      'Last 6 Month': [moment().subtract(6, 'month').startOf('days'), moment().startOf('days').add(1, 'day')],
+      'This hour': [now.clone().startOf('hour'), now.clone().startOf('hour').add(1, 'hour')],
+      'Last hour': [now.clone().subtract(1, 'hour').startOf('hour'), now.clone().subtract(1, 'hour').startOf('hour').add(1, 'hour')],
+      Today: [now.clone().startOf('days'), allNow.clone()],
+      'Last 24 Hours': [now.clone().subtract(24, 'hours'), now.clone()],
+      Yesterday: [now.clone().subtract(1, 'days').startOf('days'), now.clone().subtract(1, 'days').startOf('days').add(1, 'day')],
+      'Last 7 Days': [now.clone().subtract(6, 'days').startOf('days'), allNow.clone()],
+      'Last 30 Days': [now.clone().subtract(29, 'days').startOf('days'), allNow.clone()],
+      'This Month': [now.clone().startOf('month'), now.clone().startOf('month').add(1, 'month')],
+      'Last Month': [now.clone().subtract(1, 'month').startOf('days'), allNow.clone()],
+      'Last 3 Month': [now.clone().subtract(3, 'month').startOf('days'), allNow.clone()],
+      'Last 6 Month': [now.clone().subtract(6, 'month').startOf('days'), allNow.clone()],
 
-      // 'This hour': [moment().startOf('hour'), moment().endOf('hour')],
-      // 'Last hour': [moment().subtract(1, 'hour').startOf('hour'), moment().subtract(1, 'hour').endOf('hour')],
-      // 'Today': [moment().startOf('days'), moment().endOf('days')],
-      // 'Last 24 Hours': [moment().subtract(24, 'hours'), moment()],
-      // 'Yesterday': [moment().subtract(1, 'days').startOf('days'), moment().subtract(1, 'days').endOf('days')],
-      // 'Last 7 Days': [moment().subtract(6, 'days').startOf('days'), moment().endOf('days')],
-      // 'Last 30 Days': [moment().subtract(29, 'days').startOf('days'), moment().endOf('days')],
-      // 'This Month': [moment().startOf('month'), moment().endOf('month')],
-      // 'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-      // 'Last 3 Month': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-      // 'Last 6 Month': [moment().subtract(6, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      // 'This hour': [now.clone().startOf('hour'), now.clone().endOf('hour')],
+      // 'Last hour': [now.clone().subtract(1, 'hour').startOf('hour'), now.clone().subtract(1, 'hour').endOf('hour')],
+      // 'Today': [now.clone().startOf('days'), now.clone().endOf('days')],
+      // 'Last 24 Hours': [now.clone().subtract(24, 'hours'), now.clone()],
+      // 'Yesterday': [now.clone().subtract(1, 'days').startOf('days'), now.clone().subtract(1, 'days').endOf('days')],
+      // 'Last 7 Days': [now.clone().subtract(6, 'days').startOf('days'), now.clone().endOf('days')],
+      // 'Last 30 Days': [now.clone().subtract(29, 'days').startOf('days'), now.clone().endOf('days')],
+      // 'This Month': [now.clone().startOf('month'), now.clone().endOf('month')],
+      // 'Last Month': [now.clone().subtract(1, 'month').startOf('month'), now.clone().subtract(1, 'month').endOf('month')],
+      // 'Last 3 Month': [now.clone().subtract(3, 'month').startOf('month'), now.clone().subtract(1, 'month').endOf('month')],
+      // 'Last 6 Month': [now.clone().subtract(6, 'month').startOf('month'), now.clone().subtract(1, 'month').endOf('month')],
     }
   }
 
@@ -71,9 +73,10 @@ export default class DateRange extends Component {
   }
 
   handleCancel = (event, picker) => {
+    const now = this.props.utc ? moment.utc() : moment()
     this.props.onChange('')
-    picker.setStartDate(moment().startOf('days').toDate())
-    picker.setEndDate(moment().endOf('days').toDate())
+    picker.setStartDate(now.clone().startOf('days').toDate())
+    picker.setEndDate(now.clone().endOf('days').toDate())
   }
 
   handleChange = (event) => {
