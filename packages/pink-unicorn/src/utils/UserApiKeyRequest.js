@@ -19,6 +19,7 @@ export default class UserApiKeyRequest {
     this._requests.push(
       this._requestFactory('getCounterByKey', {
         ...props,
+        type: 'keys',
         agg_type: aggType === 'D' ? 'auto' : aggType,
       })
     )
@@ -26,6 +27,7 @@ export default class UserApiKeyRequest {
     this._requests.push(
       this._requestFactory('getStatsByKey', {
         ...props,
+        type: 'stats_key',
         agg_type: aggType === 'D' ? 'auto' : aggType,
       })
     )
@@ -41,6 +43,7 @@ export default class UserApiKeyRequest {
         this._requests.push(
           this._requestFactory('getCounterByKey', {
             ...props,
+            type: 'keys',
             agg_type: 'M',
             from: startFrom.unix(),
             to: startTo.unix(),
@@ -50,6 +53,7 @@ export default class UserApiKeyRequest {
         this._requests.push(
           this._requestFactory('getStatsByKey', {
             ...props,
+            type: 'stats_key',
             agg_type: 'M',
             from: startFrom.unix(),
             to: startTo.unix(),
@@ -67,6 +71,7 @@ export default class UserApiKeyRequest {
         this._requests.push(
           this._requestFactory('getCounterByKey', {
             ...props,
+            type: 'keys',
             agg_type: 'M',
             from: endFrom.unix(),
             to: endTo.unix(),
@@ -76,6 +81,7 @@ export default class UserApiKeyRequest {
         this._requests.push(
           this._requestFactory('getStatsByKey', {
             ...props,
+            type: 'stats_key',
             agg_type: 'M',
             from: endFrom.unix(),
             to: endTo.unix(),
@@ -104,6 +110,7 @@ export default class UserApiKeyRequest {
           if ((startDataTime - props.from) > 60 * 60 * 1000) {
             const request = this._requestFactory('getCounterByKey', {
               ...props,
+              type: 'keys',
               agg_type: 'H',
               from: props.from,
               to: startDataTime,
@@ -121,6 +128,7 @@ export default class UserApiKeyRequest {
           if ((startDataTime - props.from) > 60 * 60 * 1000) {
             const request = this._requestFactory('getStatsByKey', {
               ...props,
+              type: 'stats_key',
               agg_type: 'H',
               from: props.from,
               to: startDataTime,
