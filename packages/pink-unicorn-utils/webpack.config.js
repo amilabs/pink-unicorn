@@ -4,11 +4,12 @@ const isPropuction = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: isPropuction ? 'production' : 'development',
-  entry: './index.js',
+  entry: './src/index.js',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'lib'),
-    libraryTarget: 'commonjs2'
+    library: 'pul',
+    libraryTarget: 'umd',
   },
   // externals: /^(moment|lodash)$/i,
   plugins: [
