@@ -1,7 +1,7 @@
 import Moment from 'moment'
 import { extendMoment } from 'moment-range'
 import { split } from 'moment-range-split'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 
 const moment = extendMoment(Moment)
 

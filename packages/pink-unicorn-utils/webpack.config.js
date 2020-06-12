@@ -9,7 +9,7 @@ module.exports = {
     filename: 'index.js',
     path: path.resolve(__dirname, 'lib'),
   },
-  externals: /^(moment|lodash)$/i,
+  // externals: /^(moment|lodash)$/i,
   plugins: [
     new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
   ],
