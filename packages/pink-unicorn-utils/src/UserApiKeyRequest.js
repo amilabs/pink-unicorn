@@ -7,9 +7,8 @@ import ApiRequest from './ApiRequest'
 const moment = extendMoment(Moment)
 
 export default class UserApiKeyRequest {
-  _requests = []
-
   constructor (requestFactory) {
+    this._requests = []
     this._requestFactory = requestFactory
   }
 
