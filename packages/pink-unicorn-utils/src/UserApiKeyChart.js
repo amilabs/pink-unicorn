@@ -3,8 +3,8 @@ import formatNum from './formatNum'
 
 export default class UserApiKeyChart {
   constructor (state, zoom) {
-    this.state = state
-    this.zoom = zoom
+    this.state = state || {}
+    this.zoom = zoom || []
 
     this.tooltipItems = [
       ['Request', value => (!value ? '-' : formatNum(value)), 1],
@@ -62,48 +62,25 @@ export default class UserApiKeyChart {
     )
   }
 
-  axisXFormatter = (value, idx, axis) => {
-    let ticks = axis.scale.getTicks();
-    const len = ticks.length;
-    let str;
+  axisXFormatter = value => (
+    this.state.aggType === 'D' ?
+      moment.utc(value).format('D. MMM') :
+      moment(value).format('D. MMM, HH:mm')
+  )
 
-    if (!ticks || !len) {
-      str = moment(value).format('MMM YY');
-    } else if (!this.checkSameDate(ticks, 'MMM YY')) {
-      str = moment(value).format('MMM YY');
-    } else if (!this.checkSameDate(ticks, 'D. MMM')) {
-      str = moment(value).format('D. MMM');
-    } else {
-      str = moment(value).format('D. MMM, HH:mm');
-    }
+  axisXPointerFormatter = data => (
+    this.state.aggType === 'D' ?
+      moment.utc(data.value).format('D. MMM') :
+      moment(data.value).format('D. MMM, HH:mm')
+  )
 
-    return str;
-  }
-
-  axisXPointerFormatter = data => moment(data.value).format('D. MMM, HH:mm')
-
-  dataZoomFormatter = (value) => moment(value).format('HH:mm[\n]D. MMM')
+  dataZoomFormatter = value => (
+    this.state.aggType === 'D' ?
+      moment(value).format('D. MMM') :
+      moment(value).format('HH:mm[\n]D. MMM')
+    )
 
   axisYFormatter = data => formatNum(data.value)
-
-  checkSameDate(ticks, format) {
-    const len = ticks.length;
-    let prevStr = '';
-    let cnt = 0;
-    let hasSame = false;
-    for (let i = 0; i < len; i++) {
-      const str = moment(ticks[i]).format(format);
-      if (str === prevStr || i === 0) {
-        cnt++;
-        if (cnt >= 2) {
-          hasSame = true;
-          break;
-        }
-      }
-      prevStr = str;
-    }
-    return hasSame;
-  }
 
   getChartOptions () {
     return {
