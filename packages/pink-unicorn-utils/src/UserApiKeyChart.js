@@ -78,9 +78,27 @@ export default class UserApiKeyChart {
     this.state.aggType === 'D' ?
       moment(value).format('D. MMM') :
       moment(value).format('HH:mm[\n]D. MMM')
-    )
+  )
 
   axisYFormatter = data => formatNum(data.value)
+
+  sample = (value, dim) => {
+    switch (dim) {
+      case 'count':
+      case 'skip':
+        return this.sampleSum(value)
+      default:
+        return value
+    }
+  }
+
+  sampleSum (frame) {
+    var sum = 0;
+    for (var i = 0; i < frame.length; i++) {
+      sum += frame[i] || 0;
+    }
+    return sum;
+  }
 
   getChartOptions () {
     return {
