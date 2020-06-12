@@ -225,6 +225,16 @@ export default class UserApiKeyRequest {
       prevSkip = skip
     }
 
+    if (!source.length) {
+      const empty = ApiRequest.responseReduce({}, props)
+      for (let idx = 0, len = empty.timeSource.length; idx < len; idx++) {
+        if (!+idx) {
+          source.push([ +item.start, null, null ])
+        }
+        source.push([ +item.end, null, null ])
+      }
+    }
+
     return source
   }
 
