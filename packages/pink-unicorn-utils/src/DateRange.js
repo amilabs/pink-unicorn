@@ -59,7 +59,7 @@ export default class DateRange extends Component {
       showCustomRangeLabel: false,
       locale: {
         format: 'YYYY-MM-DD HH:mm:ss',
-        cancelLabel: 'Clear'
+        cancelLabel: 'Cancel'
       },
       ranges: this.customRanges()
     });
@@ -74,7 +74,8 @@ export default class DateRange extends Component {
   }
 
   dateCreate (value) {
-    return this.props.utc ? moment.utc(value) : moment(value)
+    return value ? (this.props.utc ? moment.utc(value) : moment(value)) :
+      (this.props.utc ? moment.utc() : moment())
   }
 
   maxDate () {
@@ -117,10 +118,11 @@ export default class DateRange extends Component {
   }
 
   handleCancel = (event, picker) => {
-    const now = this.props.utc ? moment.utc() : moment()
-    this.props.onChange('')
-    picker.setStartDate(now.clone().startOf('days').toDate())
-    picker.setEndDate(now.clone().endOf('days').toDate())
+    picker.hide()
+    // const now = this.props.utc ? moment.utc() : moment()
+    // this.props.onChange('')
+    // picker.setStartDate(now.clone().startOf('days').toDate())
+    // picker.setEndDate(now.clone().endOf('days').toDate())
   }
 
   handleChange = (event) => {
