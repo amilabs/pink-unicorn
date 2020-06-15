@@ -16,30 +16,69 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              ['@babel/preset-env', { loose: true, modules: false }],
-              '@babel/preset-flow',
-              '@babel/preset-react'
-            ],
-            plugins: [
-              '@babel/plugin-transform-runtime',
-              '@babel/plugin-proposal-function-bind',
-              '@babel/plugin-proposal-function-sent',
-              ['@babel/plugin-proposal-optional-chaining', { loose: false }],
-              ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-proposal-do-expressions',
-              '@babel/plugin-syntax-dynamic-import',
-              ['@babel/plugin-proposal-decorators', { legacy: true }],
-              ['@babel/plugin-proposal-private-methods', { loose: true }],
-              ['@babel/plugin-proposal-class-properties', { loose: true }],
-              ['@babel/plugin-transform-classes', { loose: true }]
+        oneOf: [
+          {
+            resourceQuery: /worker/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    ['@babel/preset-env', { loose: true, modules: false }],
+                    '@babel/preset-flow',
+                    '@babel/preset-react'
+                  ],
+                  plugins: [
+                    '@babel/plugin-transform-runtime',
+                    '@babel/plugin-proposal-function-bind',
+                    '@babel/plugin-proposal-function-sent',
+                    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
+                    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+                    '@babel/plugin-proposal-object-rest-spread',
+                    '@babel/plugin-proposal-do-expressions',
+                    '@babel/plugin-syntax-dynamic-import',
+                    ['@babel/plugin-proposal-decorators', { legacy: true }],
+                    ['@babel/plugin-proposal-private-methods', { loose: true }],
+                    ['@babel/plugin-proposal-class-properties', { loose: true }],
+                    ['@babel/plugin-transform-classes', { loose: true }]
+                  ]
+                }
+              },
+              {
+                loader: 'worker-loader',
+                options: { inline: true, fallback: true }
+              }
+            ]
+          },
+          {
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: [
+                    ['@babel/preset-env', { loose: true, modules: false }],
+                    '@babel/preset-flow',
+                    '@babel/preset-react'
+                  ],
+                  plugins: [
+                    '@babel/plugin-transform-runtime',
+                    '@babel/plugin-proposal-function-bind',
+                    '@babel/plugin-proposal-function-sent',
+                    ['@babel/plugin-proposal-optional-chaining', { loose: false }],
+                    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: false }],
+                    '@babel/plugin-proposal-object-rest-spread',
+                    '@babel/plugin-proposal-do-expressions',
+                    '@babel/plugin-syntax-dynamic-import',
+                    ['@babel/plugin-proposal-decorators', { legacy: true }],
+                    ['@babel/plugin-proposal-private-methods', { loose: true }],
+                    ['@babel/plugin-proposal-class-properties', { loose: true }],
+                    ['@babel/plugin-transform-classes', { loose: true }]
+                  ]
+                }
+              }
             ]
           }
-        }
+        ]
       },
     ]
   },

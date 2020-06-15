@@ -1,3 +1,4 @@
+export { default as GroupDatasetWorker } from './groupDataset.worker.js?worker'
 export { default as ApiRequest } from './ApiRequest'
 export { default as Deferred } from './Deferred'
 export { default as formatDateInterval } from './formatDateInterval'
