@@ -113,8 +113,12 @@ export default class DateRange extends Component {
     let endDate = this.dateCreate(picker.endDate)
     startDate = startDate && minDate ? moment.max(minDate, startDate) : startDate
     endDate = endDate && maxDate ? moment.min(maxDate, endDate) : endDate
+    const value = `${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`
 
-    this.props.onChange(`${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`)
+    this.props.onChange(value, [
+      startDate,
+      endDate,
+    ])
   }
 
   handleCancel = (event, picker) => {
@@ -130,7 +134,10 @@ export default class DateRange extends Component {
     this.$picker.hide()
     this.$picker.setStartDate(interval[0])
     this.$picker.setEndDate(interval[1])
-    this.props.onChange(event.target.value, interval)
+    this.props.onChange(event.target.value, [
+      this.dateCreate(interval[0]),
+      this.dateCreate(interval[1]),
+    ])
   }
 
   handleShow = () => {
