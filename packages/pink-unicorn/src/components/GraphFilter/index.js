@@ -44,18 +44,24 @@ export default function GraphFilter ({
           utc={utc}
           onChange={value => {
             value = parseDateInterval(value, true, utc)
+            let data
             if (value.length === 2) {
-              setFilterData({
+              data = {
                 ...filterData,
                 from: Math.floor(value[0].getTime() / 1000),
                 to: Math.floor(value[1].getTime() / 1000),
-              })
+              }
             } else {
-              setFilterData({
+              data = {
                 ...filterData,
                 from: undefined,
                 to: undefined,
-              })
+              }
+            }
+
+            setFilterData(data)
+            if (!disabled) {
+              onChange(data)
             }
           }}
         >
@@ -66,11 +72,6 @@ export default function GraphFilter ({
             disabled={disabled}
           />
         </DateRange>
-      </FormGroup>
-
-      <FormGroup className="mb-2 mr-2 mb-sm-0">
-        <Label>&nbsp;</Label>
-        <Button disabled={disabled} className="form-control">Submit</Button>
       </FormGroup>
 
       {showCancel ? (

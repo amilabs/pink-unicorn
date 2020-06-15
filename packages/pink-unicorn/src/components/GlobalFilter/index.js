@@ -65,11 +65,12 @@ export default function GlobalFilter ({
           onChange={value => {
             value = parseDateInterval(value)
             if (value.length === 2) {
-              setFilterData({
+              const data = {
                 ...filterData,
                 from: Math.floor(value[0].getTime() / 1000),
                 to: Math.floor(value[1].getTime() / 1000),
-              })
+              }
+              setFilterData(data)
             }
           }}
         >
