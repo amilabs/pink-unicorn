@@ -1,9 +1,9 @@
-import 'daterangepicker/daterangepicker.css'
+// import 'daterangepicker/daterangepicker.css'
 import { Component, createRef, cloneElement } from 'react'
-import { Input } from 'reactstrap'
 import DateRangePicker from 'daterangepicker'
 import moment from 'moment'
-import { parseDateInterval, formatDateInterval } from '../../utils'
+import parseDateInterval from './parseDateInterval'
+import formatDateInterval from './formatDateInterval'
 
 class IntervalDatePicker extends DateRangePicker {
   clickRange (e) {

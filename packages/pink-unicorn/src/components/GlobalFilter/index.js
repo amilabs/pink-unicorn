@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
-import DateRange from '../DateRange'
+import { DateRange } from 'pink-unicorn-utils'
 import { parseDateInterval, formatDateInterval } from '../../utils'
+
+const DateInput = forwardRef((props, ref) => (
+  <Input innerRef={ref} {...props} />
+))
 
 export default function GlobalFilter ({
   data,
@@ -57,11 +61,7 @@ export default function GlobalFilter ({
       <FormGroup className="mb-2 mr-2 mb-sm-0">
         <Label for="dataRange" className="mr-2">From</Label>
         <DateRange
-          id="dataRange"
-          name="dataRange"
-          style={{ width: 360 }}
           value={dataRange}
-          disabled={disabled}
           onChange={value => {
             value = parseDateInterval(value)
             if (value.length === 2) {
@@ -72,7 +72,14 @@ export default function GlobalFilter ({
               })
             }
           }}
-        />
+        >
+          <DateInput
+            id="dataRange"
+            name="dataRange"
+            style={{ width: 360 }}
+            disabled={disabled}
+          />
+        </DateRange>
       </FormGroup>
 
       <FormGroup className="mb-2 mr-2 mb-sm-0">
