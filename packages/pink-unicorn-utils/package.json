@@ -1,6 +1,6 @@
 {
-  "name": "@rikishi/pink-unicorn-utils",
-  "version": "1.2.2",
+  "name": "pink-unicorn-utils",
+  "version": "1.2.3",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "lib/index.js",
   "module": "lib/index.js",

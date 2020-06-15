@@ -130,7 +130,7 @@ export default class DateRange extends Component {
     this.$picker.hide()
     this.$picker.setStartDate(interval[0])
     this.$picker.setEndDate(interval[1])
-    this.props.onChange(event.target.value)
+    this.props.onChange(event.target.value, interval)
   }
 
   handleShow = () => {
