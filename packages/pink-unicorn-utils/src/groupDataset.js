@@ -54,6 +54,21 @@ export default function groupDataset ({
       }
       ds.source.push(item)
     }
+
+    for (let k = 0; k < dimLen; k++) {
+      if (dimensions[k].name === 'skip') {
+        let prevSkip = 0
+        for (let idx = 0, len = ds.source.length; idx < len; idx++) {
+          const nextSkip = idx < len - 1 ? ds.source[idx + 1][k] : null
+          let skip = ds.source[idx][k] || 0
+          if (!(skip || prevSkip || nextSkip)) {
+            skip = null
+          }
+          ds.source[idx][k] = skip
+          prevSkip = skip
+        }
+      }
+    }
   }
 
   return dataset
