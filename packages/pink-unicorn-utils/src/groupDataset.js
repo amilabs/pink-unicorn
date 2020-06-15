@@ -9,9 +9,9 @@ export default function groupDataset ({
   const dimLen = dimensions.length
   const sampleLen = dimensions.length - 1
 
-  for (let i = 0; i++; i < dataset.length) {
-    const ds = dataset[i]
-    const chunks = new Map()
+  for (let i = 0; i < dataset.length; i++) {
+    let ds = dataset[i]
+    let chunks = new Map()
 
     while (start < end) {
       chunks.set(start, [start].concat(Array(sampleLen).fill([])))
@@ -21,7 +21,8 @@ export default function groupDataset ({
     chunks.set(end, [start].concat(Array(sampleLen).fill([])))
 
     ds.source = ds.source || []
-    ds.source.forEach(item => {
+    for (let j = 0, len = ds.source.length; j < len; j++) {
+      const item = ds.source[j]
       let chunk
       for (const ts of chunks.keys()) {
         if (item[0] >= ts && item[0] < ts + group) {
@@ -42,11 +43,17 @@ export default function groupDataset ({
           chunk[7] && chunk[7].concat(item[7]),
         ])
       }
-    })
+    }
 
-    ds.source = Array.from(chunks.values()).map(item => (
-      item.slice(0, dimLen).map((val, idx) => sample(dimensions[idx].name, val))
-    ))
+    ds.source = []
+    chunks = Array.from(chunks.values())
+    for (let j = 0, len = chunks.length; j < len; j++) {
+      const item = chunks[j].slice(0, dimLen)
+      for (let k = 0; k < dimLen; k++) {
+        item[k] = sample(dimensions[k].name, item[k])
+      }
+      ds.source.push(item)
+    }
   }
 
   return dataset
