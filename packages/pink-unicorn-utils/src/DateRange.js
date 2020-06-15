@@ -36,10 +36,13 @@ export default class DateRange extends Component {
 
   componentDidMount() {
     const interval = Array.isArray(this.props.value) ? this.props.value : parseDateInterval(this.props.value, true, this.props.utc)
+    let startDate = interval[0] ? this.dateCreate(interval[0]) : null
+    let endDate = interval[1] ? this.dateCreate(interval[1]) : null
     const minDate = this.minDate()
     const maxDate = this.maxDate()
-    const startDate = minDate && interval[0] ? moment.max(minDate, interval[0]) : interval[0]
-    const endDate = maxDate && interval[1] ? moment.min(maxDate, interval[1]) : interval[1]
+
+    startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
+    endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
 
     this.$picker = new IntervalDatePicker(this.control.current, {
       startDate,
@@ -70,12 +73,18 @@ export default class DateRange extends Component {
     this.$picker.remove()
   }
 
+  dateCreate (value) {
+    return this.props.utc ? moment.utc(value) : moment(value)
+  }
+
   maxDate () {
-    return this.props.maxDate || (this.props.utc ? moment.utc() : moment()).startOf('days').add(1, 'day').toDate()
+    return this.props.maxDate ?
+      this.dateCreate(this.props.maxDate) :
+      this.dateCreate().startOf('days').add(1, 'day')
   }
 
   minDate () {
-    return this.props.minDate
+    return this.props.minDate ? this.dateCreate(this.props.minDate) : null
   }
 
   customRanges() {
@@ -99,11 +108,10 @@ export default class DateRange extends Component {
   handleApply = (event, picker) => {
     const minDate = this.minDate()
     const maxDate = this.maxDate()
-    let startDate = minDate ? moment.max(minDate, picker.startDate) : picker.startDate
-    let endDate = maxDate ? moment.min(maxDate, picker.endDate) : picker.endDate
-
-    startDate = this.props.utc ? moment.utc(startDate) : moment(startDate)
-    endDate = this.props.utc ? moment.utc(endDate) : moment(endDate)
+    let startDate = this.dateCreate(picker.startDate)
+    let endDate = this.dateCreate(picker.endDate)
+    startDate = startDate && minDate ? moment.max(minDate, startDate) : startDate
+    endDate = endDate && maxDate ? moment.min(maxDate, endDate) : endDate
 
     this.props.onChange(`${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`)
   }

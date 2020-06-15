@@ -1,6 +1,6 @@
 {
   "name": "pink-unicorn",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
   "module": "index.js",
@@ -22,7 +22,6 @@
     "react-dom": "16.12.x"
   },
   "dependencies": {
-    "pink-unicorn-utils": "1.2.0",
     "@fortawesome/fontawesome-free": "5.12.1",
     "@sentry/browser": "5.12.1",
     "bootstrap": "4.4.1",
