@@ -9,6 +9,8 @@ export default function GraphFilter ({
   showCancel,
   className = 'mb-4',
   utc = false,
+  minDate,
+  maxDate,
   onChange = () => {},
   onCancel = () => {},
 } = {}) {
@@ -37,6 +39,8 @@ export default function GraphFilter ({
           style={{ width: 360 }}
           value={dataRange}
           disabled={disabled}
+          minDate={minDate}
+          maxDate={maxDate}
           utc={utc}
           onChange={value => {
             value = parseDateInterval(value, true, utc)

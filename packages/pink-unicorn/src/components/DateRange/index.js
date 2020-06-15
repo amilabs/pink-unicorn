@@ -14,11 +14,14 @@ export default class DateRange extends Component {
     this.$picker = new DateRangePicker(this.control.current, {
       startDate: interval[0],
       endDate: interval[1],
+      minDate: this.props.minDate,
+      maxDate: this.props.maxDate || (this.props.utc ? moment.utc() : moment()).startOf('days').add(1, 'day').toDate(),
       timePicker: true,
       showDropdowns: true,
       autoUpdateInput: false,
       timePicker24Hour: true,
       timePickerSeconds: true,
+      alwaysShowCalendars: true,
       locale: {
         format: 'YYYY-MM-DD HH:mm:ss',
         cancelLabel: 'Clear'
