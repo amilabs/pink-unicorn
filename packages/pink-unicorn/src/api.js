@@ -62,17 +62,21 @@ SwaggerClient.execute = (options) => {
 
 const clients = {}
 
-export function client (name, spec) {
+export function client (name, spec, alias) {
+  const key = alias || name
+
+  if (clients[ key ]) {
+    return clients[ key ]
+  }
+
   if (!(spec || apiSpecs[ name ])) {
     return Promise.reject(new Error(`Client "${name}" not found`))
   }
 
-  if (!clients[ name ]) {
-    clients[ name ] = new SwaggerClient({
-      spec: apiSpecs[ name ] ? merge({}, apiSpecs[ name ], spec) : spec,
-      v2OperationIdCompatibilityMode: true,
-    })
-  }
+  clients[ key ] = new SwaggerClient({
+    spec: apiSpecs[ name ] ? merge({}, apiSpecs[ name ], spec) : spec,
+    v2OperationIdCompatibilityMode: true,
+  })
 
-  return clients[ name ]
+  return clients[ key ]
 }
