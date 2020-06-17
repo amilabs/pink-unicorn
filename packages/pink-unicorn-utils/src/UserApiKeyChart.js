@@ -148,8 +148,9 @@ export default class UserApiKeyChart {
           { name: 'Exceeded' },
         ],
         top: -5,
-        itemHeight: 0,
+        itemHeight: 4,
         itemWidth: 16,
+        icon: 'roundRect',
         textStyle: {
           fontSize: 14,
           lineHeight: 16
