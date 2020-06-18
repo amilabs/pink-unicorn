@@ -73,6 +73,32 @@ export default class DateRange extends Component {
     this.$picker.remove()
   }
 
+  componentDidUpdate (prevProps) {
+    if (
+      this.props.value !== prevProps.value ||
+      this.props.utc !== prevProps.utc ||
+      this.props.maxDate !== prevProps.maxDate ||
+      this.props.minDate !== prevProps.minDate
+    ) {
+      const interval = Array.isArray(this.props.value) ? this.props.value : parseDateInterval(this.props.value, true, this.props.utc)
+      let startDate = interval[0] ? this.dateCreate(interval[0]) : null
+      let endDate = interval[1] ? this.dateCreate(interval[1]) : null
+      const minDate = this.minDate()
+      const maxDate = this.maxDate()
+
+      startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
+      endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
+
+      if (startDate) {
+        this.$picker.setStartDate(startDate)
+      }
+
+      if (endDate) {
+        this.$picker.setEndDate(endDate)
+      }
+    }
+  }
+
   dateCreate (value) {
     return value ? (this.props.utc ? moment.utc(value) : moment(value)) :
       (this.props.utc ? moment.utc() : moment())
