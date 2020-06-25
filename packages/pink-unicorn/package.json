@@ -1,5 +1,5 @@
 {
-  "name": "pink-unicorn",
+  "name": "@amilabs/pink-unicorn",
   "version": "1.2.3",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "index.js",
