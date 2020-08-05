@@ -71,6 +71,7 @@ module.exports = {
         test: /\.jsx?$/,
         include: [
           srcPath,
+          /node_modules\/@amilabs\/pink-unicorn/,
           /node_modules\/@rikishi\/pink-unicorn/,
           /node_modules\/pink-unicorn/,
           /packages\/pink-unicorn/,
