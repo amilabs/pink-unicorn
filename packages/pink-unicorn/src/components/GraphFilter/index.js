@@ -1,6 +1,6 @@
 import { useState, useEffect, forwardRef } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
-import { DateRange } from 'pink-unicorn-utils'
+import { DateRange } from '@amilabs/pink-unicorn-utils'
 import { parseDateInterval, formatDateInterval } from '../../utils'
 
 const DateInput = forwardRef((props, ref) => (

@@ -1,6 +1,6 @@
-import 'pink-unicorn/src/style/index.scss'
+import '@amilabs/pink-unicorn/src/style/index.scss'
 import { render } from 'react-dom'
-import { App } from 'pink-unicorn'
+import { App } from '@amilabs/pink-unicorn'
 import routes, { menu } from './routes'
 
 render((

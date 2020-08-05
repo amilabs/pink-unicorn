@@ -9,7 +9,7 @@ import {
   TableCellInt,
   ColumnFilterText,
   GraphFilter,
-} from 'pink-unicorn'
+} from '@amilabs/pink-unicorn'
 
 class CollectionView extends Component {
 
