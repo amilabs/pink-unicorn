@@ -8,6 +8,7 @@ const DateInput = forwardRef((props, ref) => (
 ))
 
 export default function GraphFilter ({
+  children,
   data,
   disabled,
   showCancel,
@@ -73,6 +74,8 @@ export default function GraphFilter ({
           />
         </DateRange>
       </FormGroup>
+
+      {children}
 
       {showCancel ? (
         <FormGroup className="mb-2 mr-2 mb-sm-0">
