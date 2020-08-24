@@ -184,9 +184,15 @@ export default function Table ({
             prepareRow(row)
             return (
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps({
+                    className: cell.column.className,
+                    style: cell.column.style,
+                    width: cell.column.width,
+                  })}>
+                    {cell.render('Cell')}
+                  </td>
+                ))}
               </tr>
             )
           })}
