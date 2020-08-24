@@ -13,12 +13,17 @@ import {
 
 class CollectionView extends Component {
 
-  static getInitialState () {
+  static getInitialState (a,b,c) {
     return {
       loading: false,
       error: null,
       data: [],
-      globalFilter: {},
+      globalFilter: {
+        from: (new Date() - 1000000) / 1000,
+        to: (new Date()) / 1000,
+      },
+      minDate: null,
+      maxDate: null,
     }
   }
 
@@ -55,6 +60,15 @@ class CollectionView extends Component {
 
   state = CollectionView.getInitialState(this.props)
 
+  componentDidMount () {
+    setTimeout(() => {
+      this.setState({
+        minDate: '2020-08-20T08:20:52.000Z',
+        maxDate: '2020-08-24T06:40:54.000Z',
+      })
+    }, 5000)
+  }
+
   componentWillUnmount () {
     this.isUnmounted = true
   }
@@ -64,6 +78,8 @@ class CollectionView extends Component {
       nextProps.location.search !== this.props.location.search ||
       nextState.loading !== this.state.loading ||
       nextState.error !== this.state.error ||
+      nextState.minDate !== this.state.minDate ||
+      nextState.maxDate !== this.state.maxDate ||
       !isEqual(nextState.globalFilter, this.state.globalFilter)
     )
   }
@@ -109,6 +125,8 @@ class CollectionView extends Component {
           data={this.state.globalFilter}
           onChange={this.handleChangeFilter}
           utc
+          minDate={this.state.minDate}
+          maxDate={this.state.maxDate}
         />
 
         <Table

@@ -86,8 +86,12 @@ export default class DateRange extends Component {
       const minDate = this.minDate()
       const maxDate = this.maxDate()
 
-      startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
       endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
+      startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
+      startDate = moment.min(startDate, endDate)
+
+      this.$picker.minDate = minDate
+      this.$picker.maxDate = maxDate
 
       if (startDate) {
         this.$picker.setStartDate(startDate)
@@ -96,6 +100,8 @@ export default class DateRange extends Component {
       if (endDate) {
         this.$picker.setEndDate(endDate)
       }
+
+      this.$picker.updateView()
     }
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "@amilabs/pink-unicorn-utils",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/amilabs/pink-unicorn#readme",
   "peerDependencies": {
-    "react": "16.12.x"
+    "react": "16.13.x"
   },
   "dependencies": {
-    "lodash": "4.17.19",
+    "lodash": "4.17.20",
     "moment": "2.24.0",
     "moment-range": "4.0.2",
     "moment-range-split": "1.0.1",
