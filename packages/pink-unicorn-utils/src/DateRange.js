@@ -35,20 +35,17 @@ export default class DateRange extends Component {
   control = createRef()
 
   componentDidMount() {
-    const interval = Array.isArray(this.props.value) ? this.props.value : parseDateInterval(this.props.value, true, this.props.utc)
-    let startDate = interval[0] ? this.dateCreate(interval[0]) : null
-    let endDate = interval[1] ? this.dateCreate(interval[1]) : null
-    const minDate = this.minDate()
-    const maxDate = this.maxDate()
+    const interval = Array.isArray(this.props.value) ?
+      this.props.value :
+      parseDateInterval(this.props.value, true, this.props.utc)
 
-    startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
-    endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
+    const [ startDate, endDate ] = this.getDateInterval(interval)
 
     this.$picker = new IntervalDatePicker(this.control.current, {
       startDate,
       endDate,
-      minDate,
-      maxDate,
+      minDate: this.minDate(),
+      maxDate: this.maxDate(),
       autoApply: false,
       timePicker: true,
       showDropdowns: true,
@@ -67,6 +64,7 @@ export default class DateRange extends Component {
     this.$picker.element.on('cancel.daterangepicker', this.handleCancel)
     this.$picker.element.on('apply.daterangepicker', this.handleApply)
     this.$picker.element.on('show.daterangepicker', this.handleShow)
+    this.updateControlValue()
   }
 
   componentWillUnmount() {
@@ -80,28 +78,23 @@ export default class DateRange extends Component {
       this.props.maxDate !== prevProps.maxDate ||
       this.props.minDate !== prevProps.minDate
     ) {
-      const interval = Array.isArray(this.props.value) ? this.props.value : parseDateInterval(this.props.value, true, this.props.utc)
-      let startDate = interval[0] ? this.dateCreate(interval[0]) : null
-      let endDate = interval[1] ? this.dateCreate(interval[1]) : null
-      const minDate = this.minDate()
-      const maxDate = this.maxDate()
+      this.$picker.minDate = this.minDate()
+      this.$picker.maxDate = this.maxDate()
 
-      endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
-      startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
-      startDate = moment.min(startDate, endDate)
+      const interval = Array.isArray(this.props.value) ?
+        this.props.value :
+        parseDateInterval(this.props.value, true, this.props.utc)
 
-      this.$picker.minDate = minDate
-      this.$picker.maxDate = maxDate
-
+      const [ startDate, endDate ] = this.getDateInterval(interval)
       if (startDate) {
         this.$picker.setStartDate(startDate)
       }
-
       if (endDate) {
         this.$picker.setEndDate(endDate)
       }
 
       this.$picker.updateView()
+      this.updateControlValue()
     }
   }
 
@@ -138,56 +131,63 @@ export default class DateRange extends Component {
     }
   }
 
-  handleApply = (event, picker) => {
-    const minDate = this.minDate()
-    const maxDate = this.maxDate()
-    let startDate = this.dateCreate(picker.startDate)
-    let endDate = this.dateCreate(picker.endDate)
-    startDate = startDate && minDate ? moment.max(minDate, startDate) : startDate
-    endDate = endDate && maxDate ? moment.min(maxDate, endDate) : endDate
-    const value = `${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`
-
-    this.props.onChange(value, [
-      startDate,
-      endDate,
-    ])
+  handleApply = () => {
+    this.updateControlValue()
+    const [startDate, endDate] = this.getDateInterval()
+    if (startDate && endDate) {
+      this.props.onChange(
+        `${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`,
+        [startDate, endDate]
+      )
+    } else {
+      this.props.onChange('', [])
+    }
   }
 
   handleCancel = (event, picker) => {
     picker.hide()
-    // const now = this.props.utc ? moment.utc() : moment()
-    // this.props.onChange('')
-    // picker.setStartDate(now.clone().startOf('days').toDate())
-    // picker.setEndDate(now.clone().endOf('days').toDate())
-  }
-
-  handleChange = (event) => {
-    const interval = parseDateInterval(event.target.value, true, this.props.utc)
-    this.$picker.hide()
-    this.$picker.setStartDate(interval[0])
-    this.$picker.setEndDate(interval[1])
-    this.props.onChange(event.target.value, [
-      this.dateCreate(interval[0]),
-      this.dateCreate(interval[1]),
-    ])
   }
 
   handleShow = () => {
     this.$picker.ranges = this.customRanges()
   }
 
-  render() {
-    const value = Array.isArray(this.props.value) ?
-      formatDateInterval(this.props.value[0], this.props.value[1], this.props.utc) :
-      this.props.value
+  getDateInterval = (interval = [ this.$picker.startDate, this.$picker.endDate ]) => {
+    const minDate = this.minDate()
+    const maxDate = this.maxDate()
+    let startDate = interval[0] ? this.dateCreate(interval[0]) : null
+    let endDate = interval[1] ? this.dateCreate(interval[1]) : null
+    endDate = maxDate && endDate ? moment.min(maxDate, endDate) : endDate
+    startDate = minDate && startDate ? moment.max(minDate, startDate) : startDate
+    startDate = startDate && endDate ? moment.min(startDate, endDate) : startDate || endDate
+    return [startDate, endDate]
+  }
 
+  updateControlValue = () => {
+    const [startDate, endDate] = this.getDateInterval()
+    if (startDate && endDate) {
+      this.control.current.value = `${startDate.format('YYYY-MM-DD HH:mm:ss')} - ${endDate.format('YYYY-MM-DD HH:mm:ss')}`
+    } else {
+      this.control.current.value = ''
+    }
+  }
+
+  render() {
     return cloneElement(this.props.children, {
       ref: this.control,
       bsSize: this.props.bsSize,
       type: 'search',
       autoComplete: 'off',
-      value: String(value || ''),
-      onChange: this.handleChange,
+      onKeyPress: (event) => {
+        if (event.charCode === 13) {
+          this.handleApply()
+        }
+      },
+      onBlur: () => {
+        if (!this.$picker.isShowing) {
+          this.handleApply()
+        }
+      },
     })
   }
 }

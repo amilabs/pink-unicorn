@@ -37,7 +37,7 @@ export default function GraphFilter ({
         onChange(filterData)
       }}
     >
-      <FormGroup className="mb-2 mr-2 mb-sm-0">
+      <FormGroup className="mb-2 mr-2">
         <DateRange
           value={dataRange}
           minDate={minDate}

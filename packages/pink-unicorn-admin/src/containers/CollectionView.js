@@ -124,7 +124,6 @@ class CollectionView extends Component {
           disabled={this.state.loading}
           data={this.state.globalFilter}
           onChange={this.handleChangeFilter}
-          utc
           minDate={this.state.minDate}
           maxDate={this.state.maxDate}
         />

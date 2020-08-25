@@ -1,6 +1,6 @@
 {
   "name": "@amilabs/pink-unicorn-utils",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "React based framework for json-rpc based admin boxes",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack"
+    "build": "NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack --watch"
   },
   "repository": {
     "type": "git",
