@@ -22,7 +22,7 @@
     "react-dom": "16.13.x"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.12.1",
+    "@fortawesome/fontawesome-free": "5.15.1",
     "@sentry/browser": "5.12.1",
     "bootstrap": "4.4.1",
     "@rikishi/echarts": "4.8.0-rc.9",
