@@ -6,15 +6,18 @@ export default class UserApiKeyChart {
     this.state = state || {}
     this.zoom = zoom || []
 
+    this.i18nRequest = (typeof(getLocale) == 'function') ? getLocale('api', 'log_table_request') : 'Request'
+    this.i18nExceeded = (typeof(getLocale) == 'function') ? getLocale('api', 'table_exceeded') : 'Exceeded'
+
     this.tooltipItems = [
-      ['Request', value => (!value ? '-' : formatNum(value)), 1],
-      ['Exceeded', value => (!value ? '-' : formatNum(value)), 2],
+      [this.i18nRequest, value => (!value ? '-' : formatNum(value)), 1],
+      [this.i18nExceeded, value => (!value ? '-' : formatNum(value)), 2],
     ];
 
     this.dimensions = [
       { name: 'time', type: 'time', displayName: 'Time' },
       { name: 'count', type: 'number', displayName: 'Count' },
-      { name: 'skip', type: 'number', displayName: 'Exceeded' },
+      { name: 'skip', type: 'number', displayName: this.i18nExceeded },
     ];
   }
 
@@ -144,8 +147,8 @@ export default class UserApiKeyChart {
       },
       legend: {
         data: [
-          { name: 'Request' },
-          { name: 'Exceeded' },
+          { name: this.i18nRequest },
+          { name: this.i18nExceeded },
         ],
         top: -5,
         itemHeight: 4,
@@ -196,7 +199,7 @@ export default class UserApiKeyChart {
         {
           animation: false,
           id: 'request',
-          name: 'Request',
+          name: this.i18nRequest,
           type: this.state.chartType,
           smooth: this.state.smooth,
           smoothMonotone: 'x',
@@ -237,7 +240,7 @@ export default class UserApiKeyChart {
         {
           animation: false,
           id: 'skip',
-          name: 'Exceeded',
+          name: this.i18nExceeded,
           type: this.state.chartType,
           smooth: this.state.smooth,
           smoothMonotone: 'x',
